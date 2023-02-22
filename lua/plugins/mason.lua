@@ -7,7 +7,7 @@ return {
             "shellcheck",
             "pyright",
             "css-lsp",
-            "phpactor",
+            "intelephense",
             "jdtls",
             "omnisharp",
             "rust-analyzer",
