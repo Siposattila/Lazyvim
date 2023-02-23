@@ -6,6 +6,7 @@
 # This script is released to the public domain.
 
 from gi.repository import Nautilus, GObject
+from subprocess import call
 import os
 
 # path to nvim
@@ -21,9 +22,9 @@ class VimExtension(GObject.GObject, Nautilus.MenuProvider):
 
         for file in files:
             filepath = file.get_location().get_path()
-            safepaths += '"' + filepath + '" '
+            safepaths += filepath + ' '
 
-        os.system("gnome-terminal -e 'bash -c \""+NVIM+" "+safepaths+";bash\"'")
+        os.system('gnome-terminal -- '+NVIM+' '+safepaths)
 
     def get_file_items(self, *args):
         files = args[-1]
