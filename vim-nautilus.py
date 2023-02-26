@@ -24,7 +24,7 @@ class VimExtension(GObject.GObject, Nautilus.MenuProvider):
             filepath = file.get_location().get_path()
             safepaths += filepath + ' '
 
-        os.system('gnome-terminal -- '+NVIM+' '+safepaths)
+        os.system('gnome-terminal -- bash -c "cd '+safepaths+' && '+NVIM+' ."')
 
     def get_file_items(self, *args):
         files = args[-1]
