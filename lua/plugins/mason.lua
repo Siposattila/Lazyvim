@@ -324,6 +324,7 @@ return {
                 "vetur-vls",
                 "yaml-language-server",
                 "gopls",
+                "clangd"
             },
         },
         ---@param opts MasonSettings | {ensure_installed: string[]}
