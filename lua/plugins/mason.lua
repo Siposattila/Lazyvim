@@ -18,14 +18,6 @@ return {
         "lewis6991/gitsigns.nvim",
         event = "LazyFile",
         opts = {
-          --signs = {
-          --  add = { text = "▎" },
-          --  change = { text = "▎" },
-          --  delete = { text = "" },
-          --  topdelete = { text = "" },
-          --  changedelete = { text = "▎" },
-          --  untracked = { text = "▎" },
-          --},
           on_attach = function(buffer)
             local gs = package.loaded.gitsigns
 
@@ -33,19 +25,9 @@ return {
               vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
             end
 
-            -- stylua: ignore start
-            --map("n", "]h", gs.next_hunk, "Next Hunk")
-            --map("n", "[h", gs.prev_hunk, "Prev Hunk")
-            --map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-            --map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
-            --map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
-            --map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
-            --map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
-            --map("n", "<leader>ghp", gs.preview_hunk, "Preview Hunk")
-            map("n", "<leader>gb", function() gs.blame_line({ full = true }) end, "Blame Line")
-            --map("n", "<leader>ghd", gs.diffthis, "Diff This")
-            --map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
-            --map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+            map("n", "<leader>gb", function()
+              gs.blame_line({ full = true })
+            end, "Blame Line")
           end,
         },
       },
@@ -73,7 +55,7 @@ return {
       servers = {
         --jsonls = {},
         lua_ls = {
-          -- mason = false, -- set to false if you don't want this server to be installed with mason
+          mason = false, -- set to false if you don't want this server to be installed with mason
           settings = {
             Lua = {
               workspace = {
@@ -175,90 +157,12 @@ return {
             }
           end
         end,
-        --omnisharp_mono = function(server, opts)
-        --    opts.on_attach = function(client, bufnr)
-        --        client.server_capabilities.semanticTokensProvider = {
-        --            full = vim.empty_dict(),
-        --            legend = {
-        --                tokenModifiers = { "static_symbol" },
-        --                tokenTypes = {
-        --                    "comment",
-        --                    "excluded_code",
-        --                    "identifier",
-        --                    "keyword",
-        --                    "keyword_control",
-        --                    "number",
-        --                    "operator",
-        --                    "operator_overloaded",
-        --                    "preprocessor_keyword",
-        --                    "string",
-        --                    "whitespace",
-        --                    "text",
-        --                    "static_symbol",
-        --                    "preprocessor_text",
-        --                    "punctuation",
-        --                    "string_verbatim",
-        --                    "string_escape_character",
-        --                    "class_name",
-        --                    "delegate_name",
-        --                    "enum_name",
-        --                    "interface_name",
-        --                    "module_name",
-        --                    "struct_name",
-        --                    "type_parameter_name",
-        --                    "field_name",
-        --                    "enum_member_name",
-        --                    "constant_name",
-        --                    "local_name",
-        --                    "parameter_name",
-        --                    "method_name",
-        --                    "extension_method_name",
-        --                    "property_name",
-        --                    "event_name",
-        --                    "namespace_name",
-        --                    "label_name",
-        --                    "xml_doc_comment_attribute_name",
-        --                    "xml_doc_comment_attribute_quotes",
-        --                    "xml_doc_comment_attribute_value",
-        --                    "xml_doc_comment_cdata_section",
-        --                    "xml_doc_comment_comment",
-        --                    "xml_doc_comment_delimiter",
-        --                    "xml_doc_comment_entity_reference",
-        --                    "xml_doc_comment_name",
-        --                    "xml_doc_comment_processing_instruction",
-        --                    "xml_doc_comment_text",
-        --                    "xml_literal_attribute_name",
-        --                    "xml_literal_attribute_quotes",
-        --                    "xml_literal_attribute_value",
-        --                    "xml_literal_cdata_section",
-        --                    "xml_literal_comment",
-        --                    "xml_literal_delimiter",
-        --                    "xml_literal_embedded_expression",
-        --                    "xml_literal_entity_reference",
-        --                    "xml_literal_name",
-        --                    "xml_literal_processing_instruction",
-        --                    "xml_literal_text",
-        --                    "regex_comment",
-        --                    "regex_character_class",
-        --                    "regex_anchor",
-        --                    "regex_quantifier",
-        --                    "regex_grouping",
-        --                    "regex_alternation",
-        --                    "regex_text",
-        --                    "regex_self_escaped_character",
-        --                    "regex_other_escape",
-        --                },
-        --            },
-        --            range = true,
-        --        }
-        --    end
-        --end,
       },
     },
     ---@param opts PluginLspOpts
     config = function(plugin, opts)
       -- setup autoformat
-      --require("lazyvim.util").format.autoformat = opts.autoformat
+      require("lazyvim.util").format(opts)
       -- setup formatting and keymaps
       require("lazyvim.util").lsp.on_attach(function(client, buffer)
         require("lazyvim.util").format(client, buffer)
@@ -332,6 +236,8 @@ return {
           -- nls.builtins.formatting.prettierd,
           nls.builtins.formatting.stylua,
           nls.builtins.diagnostics.flake8,
+          nls.builtins.diagnostics.phpstan,
+          nls.builtins.formatting.phpcsfixer,
         },
       }
     end,
@@ -339,7 +245,6 @@ return {
 
   -- cmdline tools and lsp servers
   {
-
     "williamboman/mason.nvim",
     cmd = "Mason",
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
@@ -351,13 +256,15 @@ return {
         "intelephense",
         "jdtls",
         "omnisharp",
-        -- "omnisharp-mono",
         "rust-analyzer",
         "typescript-language-server",
         "vetur-vls",
         "yaml-language-server",
         "gopls",
         "clangd",
+        "lua-language-server",
+        "phpstan",
+        "php-cs-fixer",
       },
     },
     ---@param opts MasonSettings | {ensure_installed: string[]}
