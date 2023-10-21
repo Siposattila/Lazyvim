@@ -236,7 +236,9 @@ return {
           -- nls.builtins.formatting.prettierd,
           nls.builtins.formatting.stylua,
           nls.builtins.diagnostics.flake8,
-          nls.builtins.diagnostics.phpstan,
+          nls.builtins.diagnostics.phpstan.with({
+            method = require("null-ls").methods.DIAGNOSTICS_ON_SAVE,
+          }),
           nls.builtins.formatting.phpcsfixer,
         },
       }
