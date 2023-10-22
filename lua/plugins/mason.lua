@@ -9,9 +9,9 @@ return {
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       {
-        "hrsh7th/cmp-nvim-lsp",
-        cond = function()
-          return require("lazyvim.util").has("nvim-cmp")
+        "L3MON4D3/LuaSnip",
+        keys = function()
+          return {}
         end,
       },
       {
