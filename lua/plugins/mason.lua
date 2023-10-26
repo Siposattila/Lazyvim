@@ -260,7 +260,7 @@ return {
         "omnisharp",
         "rust-analyzer",
         "typescript-language-server",
-        "vetur-vls",
+        "vue-language-server",
         "yaml-language-server",
         "gopls",
         "clangd",
