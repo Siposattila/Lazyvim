@@ -252,7 +252,6 @@ return {
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
     opts = {
       ensure_installed = {
-        "json-lsp",
         "pyright",
         "css-lsp",
         "intelephense",
@@ -260,8 +259,6 @@ return {
         "omnisharp",
         "rust-analyzer",
         "typescript-language-server",
-        "vue-language-server",
-        "yaml-language-server",
         "gopls",
         "clangd",
         "lua-language-server",
